@@ -1,0 +1,143 @@
+[[schema]]
+name = "get_markets_response"
+kind = "struct"
+
+[[schema.values]]
+name = "name"
+type = "string"
+value = "BTC-PERP"
+description = 'e.g. "BTC/USD" for spot, "BTC-PERP" for futures'
+
+[[schema.values]]
+name = "baseCurrency"
+type = "string"
+value = "BTC"
+description = "spot markets only"
+is_optional = true
+
+[[schema.values]]
+name = "quoteCurrency"
+type = "string"
+value = "USD"
+description = 'spot markets only'
+is_optional = true
+
+[[schema.values]]
+name = "quoteVolume24h"
+type = number
+value = 28914.76
+description = ""
+
+[[schema.values]]
+name = "change1h"
+type = "number"
+value = 0.012
+description = "change in the past hour"
+
+[[schema.values]]
+name = "change24h"
+type = "number"
+value = 0.0299
+description = "change in the past 24 hours"
+
+[[schema.values]]
+name = changeBod
+type = number
+value = 0.0156
+description = "change since start of day (00:00 UTC)"
+
+[[schema.values]]
+name = "highLeverageFeeExempt"
+type = "boolean"
+value = false
+description  = ""
+
+[[schema.values]]
+name = "minProvideSize"
+type = "number"
+value = 0.001
+description = "Minimum maker order size (if >10 orders per hour fall below this size)"
+
+[[schema.values]]
+name = "type"
+type = "string"
+value = "future"
+future = '"future" or "spot"'
+
+[[schema.values]]
+name = "underlying"
+type = "string"
+value = "BTC"
+description = "future markets only"
+
+[[schema.values]]
+name = "enabled"
+type = "boolean"
+value = true
+description = ""
+
+[[schema.values]]
+name = "ask"
+type = "number"
+value = 3949.25
+description = "best ask"
+
+[[schema.values]]
+name = "bid"
+type = "number"
+value = 3949.00
+description = "best bid"
+
+[[schema.values]]
+name = "last"
+type = "number"
+value = 3949.00
+description = "last traded price"
+
+[[schema.values]]
+name = "postOnly"
+type = "boolean"
+value = false
+description = "if the market is in post-only mode (all orders get modified to be post-only, in addition to other settings they may have)"
+
+[[schema.values]]
+name = "price"
+type = "number"
+value = 10579.52
+description = "current price"
+
+[[schema.values]]
+name = "priceIncrement"
+type = "number"
+value = 0.25	
+description = ""
+
+[[schema.values]]
+name = "sizeIncrement"
+type = "number"
+value = 0.0001	
+description = ""
+
+[[schema.values]]
+name = "restricted"
+type = "boolean"
+value = false
+description = "if the market has nonstandard restrictions on which jurisdictions can trade it"
+
+[[schema.values]]
+name = "volumeUsd24h"
+type = "number"
+value = 28914.76
+description = "USD volume in past 24 hours"
+
+[[schema.values]]
+name = "largeOrderThreshold"
+type = "number"
+value = 5000.0
+description = "threshold above which an order is considered large (for VIP rate limits)"
+
+[[schema.values]]
+name = "isEtfMarket"
+type = "boolean"
+value = false
+description = "if the market has an ETF as its baseCurrency"

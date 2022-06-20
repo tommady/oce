@@ -1,0 +1,12 @@
+[package]
+name = "oce-gen"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+toml = "0.5"
+askama = "0.10"
+rust_decimal = "1.24"

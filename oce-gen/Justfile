@@ -1,0 +1,7 @@
+update-ftx-markets:
+    @echo "[[schema]]" > definitions/ftx/markets.toml
+    @echo 'name = "markets"' >> definitions/ftx/markets.toml
+    @echo 'kind = "array"' >> definitions/ftx/markets.toml
+    @echo "values = [" >> definitions/ftx/markets.toml
+    @curl -s https://ftx.com/api/markets | jq -r '(.result[] | "\"" +"\(.name)" + "\"" + ",")' >> definitions/ftx/markets.toml
+    @echo "]" >> definitions/ftx/markets.toml
