@@ -1,6 +1,5 @@
-[[schema]]
+[schema]
 name = "markets"
-kind = "array"
 values = [
 "1INCH-PERP",
 "1INCH-0624",
