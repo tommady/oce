@@ -5,6 +5,7 @@ use std::{
 };
 
 use askama::Template;
+use heck::{ToSnakeCase, ToUpperCamelCase};
 use rust_decimal::Decimal;
 use serde::Deserialize;
 
@@ -133,9 +134,14 @@ fn main() {
                     let content = e.render().unwrap();
                     fs::write(format!("./{}.rs", e.name), content).unwrap();
                 }
-                Schema::Struct(s) => {
+                Schema::Struct(mut s) => {
+                    let file_name = s.name.to_snake_case();
+                    s.name = s.name.to_upper_camel_case();
+                    for f in s.fields.iter_mut() {
+                        f.name = f.name.to_snake_case();
+                    }
                     let content = s.render().unwrap();
-                    fs::write(format!("./{}.rs", s.name), content).unwrap();
+                    fs::write(format!("./{}.rs", file_name), content).unwrap();
                 }
             },
         }

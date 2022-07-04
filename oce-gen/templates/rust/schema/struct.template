@@ -3,37 +3,36 @@ use rust_decimal::Decimal;
 
 #[derive(Debug, Deserialize)]
 pub struct {{ name }} {
-{% for field in fields %}
-    {% if field.is_optional %}
-        {% match field.value %}
-	{% when StructValue::Str with (s) %}
-	// {{ field.description }}
-	// example value: {{ s }}
-	r#{{ field.name }}: Option<String>,
-	{% when StructValue::Decimal with (d) %}
-	// {{ field.description }}
-	// example value: {{ d }}
-	r#{{ field.name }}: Option<Decimal>,
-	{% when StructValue::Bool with (b) %}
-	// {{ field.description }}
-	// example value: {{ b }}
-	r#{{ field.name }}: Option<bool>,
-	{% endmatch %}
-    {% else %}
-    	{% match field.value %}
-	{% when StructValue::Str with (s) %}
-	// {{ field.description }}
-	// example value: {{ s }}
-	r#{{ field.name }}: String,
-	{% when StructValue::Decimal with (d) %}
-	// {{ field.description }}
-	// example value: {{ d }}
-	r#{{ field.name }}: String,
-	{% when StructValue::Bool with (b) %}
-	// {{ field.description }}
-	// example value: {{ b }}
-	r#{{ field.name }}: String,
-	{% endmatch %}
-    {% endif %}
-{% endfor %}
+{%- for field in fields -%}
+    {%- let kind -%}
+    {%- let example_value -%}
+    {%- match field.value %}
+    {%- when StructValue::Str with (s) -%}
+        {%- let kind = "String" -%}
+        {%- let example_value = s.to_string() -%}
+    {%- when StructValue::Bool with (b) -%}
+        {%- let kind = "bool" -%}
+        {%- let example_value = b.to_string() -%}
+    {%- when StructValue::Decimal with (d) -%}
+        {%- let kind = "Decimal" -%}
+        {%- let example_value = d.to_string() -%}
+    {%- endmatch -%}
+
+    {%- let description-%}
+    {%- if field.description.len() != 0 -%}
+    {%- let description = field.description.clone() -%}
+    {%- else -%}
+    {%- let description = "no description".to_string() -%}
+    {%- endif -%}
+
+    {%- if field.is_optional %}
+    // {{ description }}
+    // example value: {{ example_value }}
+    r#{{ field.name }}: Option<{{ kind }}>,
+    {%- else %}
+    // {{ description }}
+    // example value: {{ example_value }}
+    r#{{ field.name }}: {{ kind }},
+    {% endif -%}
+{%- endfor -%}
 }

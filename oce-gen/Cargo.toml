@@ -10,3 +10,4 @@ serde = { version = "1.0", features = ["derive"] }
 toml = "0.5"
 askama = "0.10"
 rust_decimal = "1.24"
+heck = "0.4"
