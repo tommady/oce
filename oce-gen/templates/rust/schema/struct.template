@@ -1,0 +1,39 @@
+use serde::Deserialize;
+use rust_decimal::Decimal;
+
+#[derive(Debug, Deserialize)]
+pub struct {{ name }} {
+{% for field in fields %}
+    {% if field.is_optional %}
+        {% match field.value %}
+	{% when StructValue::Str with (s) %}
+	// {{ field.description }}
+	// example value: {{ s }}
+	r#{{ field.name }}: Option<String>,
+	{% when StructValue::Decimal with (d) %}
+	// {{ field.description }}
+	// example value: {{ d }}
+	r#{{ field.name }}: Option<Decimal>,
+	{% when StructValue::Bool with (b) %}
+	// {{ field.description }}
+	// example value: {{ b }}
+	r#{{ field.name }}: Option<bool>,
+	{% endmatch %}
+    {% else %}
+    	{% match field.value %}
+	{% when StructValue::Str with (s) %}
+	// {{ field.description }}
+	// example value: {{ s }}
+	r#{{ field.name }}: String,
+	{% when StructValue::Decimal with (d) %}
+	// {{ field.description }}
+	// example value: {{ d }}
+	r#{{ field.name }}: String,
+	{% when StructValue::Bool with (b) %}
+	// {{ field.description }}
+	// example value: {{ b }}
+	r#{{ field.name }}: String,
+	{% endmatch %}
+    {% endif %}
+{% endfor %}
+}

@@ -1,4 +1,5 @@
 use std::{
+    fmt::Display,
     fs::{self, DirEntry},
     path::{Path, PathBuf},
 };
@@ -21,28 +22,49 @@ impl Default for StructValue {
     }
 }
 
-#[derive(Debug, Deserialize, Default)]
+#[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "snake_case", default)]
-struct StructKind {
+struct StructField {
     name: String,
-    value: StructValue,
     description: String,
     is_optional: bool,
+    value: StructValue,
+}
+
+#[derive(Debug, Template, Deserialize)]
+#[serde(rename_all = "snake_case")]
+#[template(path = "rust/schema/struct.template", escape = "none")]
+struct StructKind {
+    name: String,
+    fields: Vec<StructField>,
+}
+
+#[derive(Debug, Deserialize)]
+#[serde(untagged)]
+enum EnumValue {
+    Str(String),
+}
+
+impl Display for EnumValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &*self {
+            EnumValue::Str(s) => write!(f, "{}", s),
+        }
+    }
+}
+
+#[derive(Debug, Template, Deserialize)]
+#[template(path = "rust/schema/enum.template", escape = "none")]
+struct EnumKind {
+    name: String,
+    values: Vec<EnumValue>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "snake_case", untagged)]
-enum SchemaValue {
-    Str(String),
+enum Schema {
+    Enum(EnumKind),
     Struct(StructKind),
-}
-
-#[derive(Debug, Template, Deserialize, Default)]
-#[serde(rename_all = "snake_case", default)]
-#[template(path = "schema.template", escape = "none")]
-struct Schema {
-    name: String,
-    values: Vec<SchemaValue>,
 }
 
 #[derive(Debug, Deserialize)]
@@ -95,21 +117,29 @@ fn main() {
             for f in read_dir(&file.path()).expect("read_dir failed").into_iter() {
                 files.push(f);
             }
-            // read the dir append into files
         } else {
-            // panic
             panic!("{:?} is not a file or dir", file.path());
         }
 
         if files.is_empty() {
             break;
         }
-
-        // if file.file_type().expect("get file type failed").is_dir() {
-        //     // goes into read_dir_recursively
-        // } else if file.
     }
-    // }
+
+    for definition in definitions.into_iter() {
+        match definition {
+            Definition::Schema(schema) => match schema {
+                Schema::Enum(e) => {
+                    let content = e.render().unwrap();
+                    fs::write(format!("./{}.rs", e.name), content).unwrap();
+                }
+                Schema::Struct(s) => {
+                    let content = s.render().unwrap();
+                    fs::write(format!("./{}.rs", s.name), content).unwrap();
+                }
+            },
+        }
+    }
 }
 
 fn read_dir(path: &Path) -> Result<Vec<DirEntry>> {

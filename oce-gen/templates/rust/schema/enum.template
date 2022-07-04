@@ -1,0 +1,8 @@
+use serde::Deserialize;
+
+#[derive(Debug, Deserialize)]
+pub enum {{ name }} {
+{% for value in values %}
+    r#{{ value }}("{{ value }}"),
+{% endfor %}
+}

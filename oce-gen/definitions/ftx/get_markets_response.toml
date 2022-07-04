@@ -1,6 +1,6 @@
 [schema]
 name = "get_markets_response"
-values = [
+fields = [
 { name = "name", value = "BTC-PERP", description = 'e.g. "BTC/USD" for spot, "BTC-PERP" for futures' },
 { name = "baseCurrency", value ="BTC", description = "spot markets only", is_optional = true },
 { name = "quoteCurrency", value = "USD", description = "spot markets only", is_optional = true },
