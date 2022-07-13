@@ -1,72 +1,14 @@
 use std::{
-    fmt::Display,
     fs::{self, DirEntry},
     path::{Path, PathBuf},
 };
 
 use askama::Template;
 use heck::{ToSnakeCase, ToUpperCamelCase};
-use rust_decimal::Decimal;
 use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "snake_case", untagged)]
-enum StructValue {
-    Str(String),
-    Decimal(Decimal),
-    Bool(bool),
-}
-
-impl Default for StructValue {
-    fn default() -> Self {
-        StructValue::Bool(false)
-    }
-}
-
-#[derive(Debug, Default, Deserialize)]
-#[serde(rename_all = "snake_case", default)]
-struct StructField {
-    name: String,
-    description: String,
-    is_optional: bool,
-    value: StructValue,
-}
-
-#[derive(Debug, Template, Deserialize)]
-#[serde(rename_all = "snake_case")]
-#[template(path = "rust/schema/struct.template", escape = "none")]
-struct StructKind {
-    name: String,
-    fields: Vec<StructField>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(untagged)]
-enum EnumValue {
-    Str(String),
-}
-
-impl Display for EnumValue {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match &*self {
-            EnumValue::Str(s) => write!(f, "{}", s),
-        }
-    }
-}
-
-#[derive(Debug, Template, Deserialize)]
-#[template(path = "rust/schema/enum.template", escape = "none")]
-struct EnumKind {
-    name: String,
-    values: Vec<EnumValue>,
-}
-
-#[derive(Debug, Deserialize)]
-#[serde(rename_all = "snake_case", untagged)]
-enum Schema {
-    Enum(EnumKind),
-    Struct(StructKind),
-}
+mod schema;
+use schema::*;
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "snake_case")]
