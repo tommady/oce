@@ -10,6 +10,27 @@ pub(crate) enum StructValue {
     Str(String),
     Decimal(Decimal),
     Bool(bool),
+    VectorOfDecimal(Vec<Decimal>),
+}
+
+impl Display for StructValue {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match &*self {
+            StructValue::Str(s) => write!(f, "{}", s),
+            StructValue::Decimal(d) => write!(f, "{}", d),
+            StructValue::Bool(b) => write!(f, "{}", b),
+            StructValue::VectorOfDecimal(vd) => {
+                write!(
+                    f,
+                    "[{}]",
+                    vd.iter()
+                        .map(|v| v.to_string())
+                        .collect::<Vec<String>>()
+                        .join(",")
+                )
+            }
+        }
+    }
 }
 
 impl Default for StructValue {
