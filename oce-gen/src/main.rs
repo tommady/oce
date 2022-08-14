@@ -3,6 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use anyhow::Result;
 use askama::Template;
 use heck::{ToSnakeCase, ToUpperCamelCase};
 use serde::Deserialize;
@@ -16,32 +17,10 @@ enum Definition {
     Schema(Schema),
 }
 
-#[derive(Deserialize)]
-#[serde(rename_all = "snake_case")]
-struct Config {
-    projects: Vec<Project>,
-}
-
-#[derive(Deserialize)]
-#[serde(rename_all = "snake_case")]
-struct Project {
-    name: String,
-}
-
-const DEFAULT_CONFIG_PATH: &str = "config.toml";
 const DEFAULT_DEFINITIONS_FOLDER_PATH: &str = "definitions";
 
-type Result<T> = std::result::Result<T, Box<dyn std::error::Error>>;
-
 fn main() {
-    // TODO: read from env or config file
-    // let config: Config =
-    //     toml::from_str(&fs::read_to_string(DEFAULT_CONFIG_PATH).expect("read config.toml failed"))
-    //         .expect("toml decide failed");
-
-    // for project in config.projects.into_iter() {
     let f = PathBuf::from(DEFAULT_DEFINITIONS_FOLDER_PATH);
-    // f.push(project.name);
 
     // init first round of files
     let mut files = vec![];
