@@ -59,10 +59,15 @@ fn main() {
                     let file_name = s.name.to_snake_case();
                     s.name = s.name.to_upper_camel_case();
                     for f in s.fields.iter_mut() {
+                        f.org_name = f.name.clone();
                         f.name = f.name.to_snake_case();
                     }
                     let content = s.render().unwrap();
-                    fs::write(format!("./{}.rs", file_name), content).unwrap();
+                    fs::write(
+                        format!("../oce-ftx-rs/src/schema/{}.rs", file_name),
+                        content,
+                    )
+                    .unwrap();
                 }
             },
         }

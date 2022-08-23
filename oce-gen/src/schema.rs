@@ -42,6 +42,7 @@ impl Default for StructValue {
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "snake_case", default)]
 pub(crate) struct StructField {
+    pub(crate) org_name: String,
     pub(crate) name: String,
     pub(crate) description: String,
     pub(crate) is_optional: bool,

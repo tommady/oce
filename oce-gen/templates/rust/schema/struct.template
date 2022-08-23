@@ -1,7 +1,8 @@
 use serde::Deserialize;
 use rust_decimal::Decimal;
 
-#[derive(Debug, Deserialize)]
+#[derive(Deserialize, Default)]
+#[serde(default)]
 pub struct {{ name }} {
 {%- for field in fields -%}
     {%- let kind -%}
@@ -26,10 +27,14 @@ pub struct {{ name }} {
     {%- if field.is_optional %}
     // {{ description }}
     // example value: {{ field.value.to_string() }}
+    #[serde(rename = "{{ field.org_name }}")]
+    #[serde(deserialize_with = "crate::schema::deserialize_null_default")]
     r#{{ field.name }}: Option<{{ kind }}>,
     {%- else %}
     // {{ description }}
     // example value: {{ field.value.to_string() }}
+    #[serde(rename = "{{ field.org_name }}")]
+    #[serde(deserialize_with = "crate::schema::deserialize_null_default")]
     r#{{ field.name }}: {{ kind }},
     {% endif -%}
 {%- endfor -%}
