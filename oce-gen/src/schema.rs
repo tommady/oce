@@ -11,6 +11,7 @@ pub(crate) enum StructValue {
     Decimal(Decimal),
     Bool(bool),
     VectorOfDecimal(Vec<Decimal>),
+    VectorOfVectorOfDecimal(Vec<Vec<Decimal>>),
 }
 
 impl Display for StructValue {
@@ -25,6 +26,20 @@ impl Display for StructValue {
                     "[{}]",
                     vd.iter()
                         .map(|v| v.to_string())
+                        .collect::<Vec<String>>()
+                        .join(",")
+                )
+            }
+            StructValue::VectorOfVectorOfDecimal(vvd) => {
+                write!(
+                    f,
+                    "[[{}]]",
+                    vvd.iter()
+                        .map(|vd| vd
+                            .iter()
+                            .map(|v| v.to_string())
+                            .collect::<Vec<String>>()
+                            .join(","))
                         .collect::<Vec<String>>()
                         .join(",")
                 )

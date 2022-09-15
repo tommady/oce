@@ -32,7 +32,7 @@ mod tests {
         assert_ne!(
             resp.result.len(),
             0,
-            " GetMarkets returns array should not be zero"
+            "GetMarkets returns array should not be zero"
         );
         Ok(())
     }

@@ -39,7 +39,7 @@ mod tests {
         assert!(resp.success);
         assert_eq!(
             resp.result.name, "BTC/USD",
-            " GetMarkets returns array should not be zero"
+            "GetSingleMarket result name is not expected"
         );
         Ok(())
     }

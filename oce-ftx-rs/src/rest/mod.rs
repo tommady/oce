@@ -1,4 +1,5 @@
 mod get_markets;
+mod get_orderbook;
 mod get_single_market;
 
 use reqwest::{Client, ClientBuilder, Method};

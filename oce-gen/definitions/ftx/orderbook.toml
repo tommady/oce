@@ -1,6 +1,6 @@
 [schema]
 name = "orderbook"
 fields = [
-{ name = "asks", value = [4114.25, 6.263], description = "Array with price and size" },
-{ name = "bids", value = [4112, 49.29], description = "Array with price and size" },
+{ name = "asks", value = [[4114.25, 6.263]], description = "Array with price and size" },
+{ name = "bids", value = [[4112, 49.29]], description = "Array with price and size" },
 ]
