@@ -89,4 +89,24 @@ mod tests {
         );
         Ok(())
     }
+
+    #[tokio::test]
+    async fn test_get_orderbook_depth_default() -> Result<()> {
+        let rest = RestBuilder::new().build()?;
+        let req = GetOrderbook::new("BTC/USD");
+        let resp = rest.call(req).await?;
+
+        assert!(resp.success);
+        assert_eq!(
+            resp.result.bids.len(),
+            20,
+            "GetOrderbook with depth 20 but the bids length is not equal"
+        );
+        assert_eq!(
+            resp.result.asks.len(),
+            20,
+            "GetOrderbook with depth 20 but the asks length is not equal"
+        );
+        Ok(())
+    }
 }
