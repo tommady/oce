@@ -1,5 +1,6 @@
 pub mod market;
 pub mod orderbook;
+pub mod trade;
 
 use serde::{Deserialize, Deserializer};
 

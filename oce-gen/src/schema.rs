@@ -59,6 +59,7 @@ impl Default for StructValue {
 pub(crate) enum StructValueType {
     ParseFromValue,
     Uint64,
+    Timestamp,
 }
 
 impl Default for StructValueType {
