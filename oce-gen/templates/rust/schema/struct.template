@@ -6,6 +6,8 @@ use rust_decimal::Decimal;
 pub struct {{ name }} {
 {%- for field in fields -%}
     {%- let kind -%}
+    {%- match field.typ %}
+    {%- when StructValueType::ParseFromValue -%}
     {%- match field.value %}
     {%- when StructValue::Str with (s) -%}
         {%- let kind = "String" -%}
@@ -17,6 +19,9 @@ pub struct {{ name }} {
         {%- let kind = "Vec<Decimal>" -%}
     {%- when StructValue::VectorOfVectorOfDecimal with (vvd) -%}
         {%- let kind = "Vec<Vec<Decimal>>" -%}
+    {%- endmatch -%}
+    {%- when StructValueType::Uint64 -%}
+    	{%- let kind = "u64" -%}
     {%- endmatch -%}
 
     {%- let description-%}

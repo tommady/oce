@@ -54,6 +54,19 @@ impl Default for StructValue {
     }
 }
 
+#[derive(Debug, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub(crate) enum StructValueType {
+    ParseFromValue,
+    Uint64,
+}
+
+impl Default for StructValueType {
+    fn default() -> Self {
+        StructValueType::ParseFromValue
+    }
+}
+
 #[derive(Debug, Default, Deserialize)]
 #[serde(rename_all = "snake_case", default)]
 pub(crate) struct StructField {
@@ -62,6 +75,8 @@ pub(crate) struct StructField {
     pub(crate) description: String,
     pub(crate) is_optional: bool,
     pub(crate) value: StructValue,
+    #[serde(rename = "type")]
+    pub(crate) typ: StructValueType,
 }
 
 #[derive(Debug, Template, Deserialize)]
