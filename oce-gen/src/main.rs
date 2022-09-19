@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use anyhow::Result;
+use anyhow::{Context, Result};
 use askama::Template;
 use heck::{ToSnakeCase, ToUpperCamelCase};
 use serde::Deserialize;
@@ -56,6 +56,7 @@ fn main() {
                     fs::write(format!("./{}.rs", e.name), content).unwrap();
                 }
                 Schema::Struct(mut s) => {
+                    let package = s.package.to_snake_case();
                     let file_name = s.name.to_snake_case();
                     s.name = s.name.to_upper_camel_case();
                     for f in s.fields.iter_mut() {
@@ -63,8 +64,9 @@ fn main() {
                         f.name = f.name.to_snake_case();
                     }
                     let content = s.render().unwrap();
+                    fs::create_dir_all(format!("../oce-ftx-rs/src/schema/{}", package)).unwrap();
                     fs::write(
-                        format!("../oce-ftx-rs/src/schema/{}.rs", file_name),
+                        format!("../oce-ftx-rs/src/schema/{}/{}.rs", package, file_name),
                         content,
                     )
                     .unwrap();
@@ -85,6 +87,8 @@ fn read_dir(path: &Path) -> Result<Vec<DirEntry>> {
 }
 
 fn read_file(path: &Path) -> Result<Definition> {
-    let data = fs::read(path)?;
-    Ok(toml::from_slice(&data)?)
+    let data = fs::read(path).with_context(|| format!("fs::read failed, path: {:?}", path))?;
+    let ret = toml::from_slice(&data)
+        .with_context(|| format!("toml::from_slice failed, path: {:?}", path))?;
+    Ok(ret)
 }

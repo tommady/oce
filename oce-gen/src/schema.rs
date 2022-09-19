@@ -84,6 +84,7 @@ pub(crate) struct StructField {
 #[serde(rename_all = "snake_case")]
 #[template(path = "rust/schema/struct.template", escape = "none")]
 pub(crate) struct StructKind {
+    pub(crate) package: String,
     pub(crate) name: String,
     pub(crate) fields: Vec<StructField>,
 }

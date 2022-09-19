@@ -1,0 +1,11 @@
+[schema]
+package = "markets"
+name = "candle"
+fields = [
+{ name = "startTime", value = "2019-06-24T17:15:00+00:00", description = "start time of the window" },
+{ name = "open", value = 11059.25, description = "mark price at startTime" },
+{ name = "close", value = 11055.25, description = "mark price at the end of the window: startTime + resolution" },
+{ name = "high", value = 11089.0, description = "highest mark price over the window" },
+{ name = "low", value = 11059.25, description = "lowest mark price over the window" },
+{ name = "volume", value = 464193.95725, description = "volume traded in the window" },
+]

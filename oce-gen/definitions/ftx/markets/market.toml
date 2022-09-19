@@ -1,4 +1,5 @@
 [schema]
+package = "markets"
 name = "market"
 fields = [
 { name = "name", value = "BTC-PERP", description = 'e.g. "BTC/USD" for spot, "BTC-PERP" for futures' },
