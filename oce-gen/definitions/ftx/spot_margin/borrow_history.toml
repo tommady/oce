@@ -1,0 +1,10 @@
+[schema]
+package = "spot_margin"
+name = "borrow_history"
+fields = [
+{ name = "coin", value = "BTC" },
+{ name = "cost", value = 0.00047864470072, description = "amount of coin you paid as interest on the borrow" },
+{ name = "rate", value = 1.961096e-05, description = "borrow rate" },
+{ name = "size", value = 24.407, description = "amount borrowed" },
+{ name = "time", value = "2021-04-06T20:00:00+00:00", type = "timestamp", description = "time of interest payment" },
+]

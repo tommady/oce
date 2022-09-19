@@ -1,0 +1,14 @@
+[schema]
+package = "spot_margin"
+description = ""
+fields = [
+"borrow_history",
+"borrow_rate",
+"borrow_summary",
+"history",
+"lending_history",
+"lending_info",
+"lending_rate",
+"market_info",
+"offer",
+]

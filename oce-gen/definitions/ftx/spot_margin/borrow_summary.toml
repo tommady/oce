@@ -1,0 +1,7 @@
+[schema]
+package = "spot_margin"
+name = "borrow_summary"
+fields = [
+{ name = "coin", value = "BTC" },
+{ name = "size", value = 120.1, description = "average matched borrowed and lent amount over the last 24h" },
+]

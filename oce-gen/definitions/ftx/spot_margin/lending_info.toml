@@ -1,0 +1,10 @@
+[schema]
+package = "spot_margin"
+name = "lending_info"
+fields = [
+{ name = "coin", value = "USD" },
+{ name = "lendable", value = 10026.5, description = "additional size you can lend" },
+{ name = "locked", value = 100.0, description = "size either in lending offers or not yet unlocked from lending offers" },
+{ name = "minRate", value = 1e-6, description = "minimum rate at which your offers will lend" },
+{ name = "offered", value = 100.0, description = "size in your lending offers" },
+]

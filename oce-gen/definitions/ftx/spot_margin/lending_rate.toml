@@ -1,0 +1,8 @@
+[schema]
+package = "spot_margin"
+name = "lending_rate"
+fields = [
+{ name = "coin", value = "BTC" },
+{ name = "estimate", value = 1.45e-06, description = "estimated hourly borrow rate for the next spot margin cycle" },
+{ name = "previous", value = 1.44e-06, description = "hourly borrow rate in the previous spot margin cycle" },
+]

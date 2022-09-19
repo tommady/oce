@@ -1,0 +1,8 @@
+[schema]
+package = "spot_margin"
+name = "offer"
+fields = [
+{ name = "coin", value = "BTC" },
+{ name = "rate", value = 1e-06, description = "hourly rate at which you will lend, if matched" },
+{ name = "size", value = 1.9, description = "amount you will lend, if matched" },
+]

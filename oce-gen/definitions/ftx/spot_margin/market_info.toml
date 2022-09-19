@@ -1,0 +1,10 @@
+[schema]
+package = "spot_margin"
+name = "market_info"
+fields = [
+{ name = "coin", value = "BTC" },
+{ name = "borrowed", value = 0.0, description = "amount of coin currently borrowed" },
+{ name = "free", value = 3.87278021, description = "amount of coin that can be spent buying the other coin in the supplied market, including what's borrowable with margin" },
+{ name = "estimatedRate", value = 1.45e-06, description = "estimated hourly borrow rate for the next spot margin cycle" },
+{ name = "previousRate", value = 1.44e-06, description = "hourly borrow rate in the previous spot margin cycle" },
+]

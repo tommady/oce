@@ -1,0 +1,9 @@
+[schema]
+package = "spot_margin"
+name = "history"
+fields = [
+{ name = "coin", value = "USD" },
+{ name = "time", value = "2021-04-06T20:00:00+00:00", type = "timestamp" },
+{ name = "rate", value = 0.00002283, description = "hourly lending rate for this cycle" },
+{ name = "size", value = 615974048.2224404, description = "total size matched between borrowers and lenders" },
+]
