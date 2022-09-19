@@ -3,4 +3,5 @@ package = "schema"
 description = ""
 fields = [
 "markets",
+"spot_margin",
 ]
