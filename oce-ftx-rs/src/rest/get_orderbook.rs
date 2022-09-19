@@ -1,6 +1,7 @@
 use crate::schema;
 
 use reqwest::Method;
+// use serde_urlencoded::to_string;
 
 use std::borrow::Cow;
 
@@ -32,15 +33,8 @@ impl<'a> crate::rest::Request for GetOrderbook<'a> {
     type Response = schema::orderbook::Orderbook;
 
     fn path(&self) -> Cow<'_, str> {
-        match self.depth {
-            Some(d) => Cow::Owned(
-                [Self::PATH, self.market_name].join("/")
-                    + "/orderbook"
-                    + "?depth="
-                    + &d.to_string(),
-            ),
-            None => Cow::Owned([Self::PATH, self.market_name].join("/") + "/orderbook"),
-        }
+        let params = serde_urlencoded::to_string(&[("depth", self.depth)]).unwrap();
+        Cow::Owned([Self::PATH, self.market_name].join("/") + "/orderbook?" + &params)
     }
 }
 
