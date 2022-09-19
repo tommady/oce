@@ -55,6 +55,16 @@ fn main() {
                     let content = e.render().unwrap();
                     fs::write(format!("./{}.rs", e.name), content).unwrap();
                 }
+                Schema::Mod(m) => {
+                    let package = m.package.to_snake_case();
+                    let content = m.render().unwrap();
+                    fs::create_dir_all(format!("../oce-ftx-rs/src/schema/{}", package)).unwrap();
+                    fs::write(
+                        format!("../oce-ftx-rs/src/schema/{}/mod.rs", package),
+                        content,
+                    )
+                    .unwrap();
+                }
                 Schema::Struct(mut s) => {
                     let package = s.package.to_snake_case();
                     let file_name = s.name.to_snake_case();
