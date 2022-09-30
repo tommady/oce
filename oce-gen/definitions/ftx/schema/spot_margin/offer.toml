@@ -1,5 +1,4 @@
 [schema]
-package = "spot_margin"
 name = "offer"
 fields = [
 { name = "coin", value = "BTC" },

@@ -84,7 +84,6 @@ pub(crate) struct StructField {
 #[serde(rename_all = "snake_case")]
 #[template(path = "rust/schema/struct.template", escape = "none")]
 pub(crate) struct StructKind {
-    pub(crate) package: String,
     pub(crate) name: String,
     pub(crate) fields: Vec<StructField>,
 }
@@ -113,7 +112,6 @@ pub(crate) struct EnumKind {
 #[derive(Debug, Template, Deserialize)]
 #[template(path = "rust/schema/mod.template", escape = "none")]
 pub(crate) struct ModKind {
-    pub(crate) package: String,
     pub(crate) description: String,
     pub(crate) fields: Vec<String>,
 }

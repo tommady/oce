@@ -40,13 +40,11 @@ pub struct {{ name }} {
     // {{ description }}
     // example value: {{ field.value.to_string() }}
     #[serde(rename = "{{ field.org_name }}")]
-    #[serde(deserialize_with = "crate::schema::deserialize_null_default")]
     pub r#{{ field.name }}: Option<{{ kind }}>,
     {%- else %}
     // {{ description }}
     // example value: {{ field.value.to_string() }}
     #[serde(rename = "{{ field.org_name }}")]
-    #[serde(deserialize_with = "crate::schema::deserialize_null_default")]
     pub r#{{ field.name }}: {{ kind }},
     {% endif -%}
 {%- endfor -%}

@@ -5,5 +5,5 @@
 // {{ description }}
 
 {% for field in fields -%}
-pub mod {{ field -}}; 
+pub mod {{ field -}};
 {% endfor %}

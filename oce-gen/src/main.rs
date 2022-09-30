@@ -18,6 +18,8 @@ enum Definition {
 }
 
 const DEFAULT_DEFINITIONS_FOLDER_PATH: &str = "definitions";
+const DEFAULT_DEFINITIONS_FTX_NAME: &str = "ftx";
+const DEFAULT_DESTINATION_FTX_RUST_FOLDER_NAME: &str = "oce-ftx-rs";
 
 fn main() {
     let f = PathBuf::from(DEFAULT_DEFINITIONS_FOLDER_PATH);
@@ -48,40 +50,55 @@ fn main() {
         }
     }
 
-    for definition in definitions.into_iter() {
-        match definition {
-            Definition::Schema(schema) => match schema {
-                Schema::Enum(e) => {
-                    let content = e.render().unwrap();
-                    fs::write(format!("./{}.rs", e.name), content).unwrap();
-                }
-                Schema::Mod(m) => {
-                    let package = m.package.to_snake_case();
-                    let content = m.render().unwrap();
-                    fs::create_dir_all(format!("../oce-ftx-rs/src/schema/{}", package)).unwrap();
-                    fs::write(
-                        format!("../oce-ftx-rs/src/schema/{}/mod.rs", package),
-                        content,
-                    )
-                    .unwrap();
-                }
-                Schema::Struct(mut s) => {
-                    let package = s.package.to_snake_case();
-                    let file_name = s.name.to_snake_case();
-                    s.name = s.name.to_upper_camel_case();
-                    for f in s.fields.iter_mut() {
-                        f.org_name = f.name.clone();
-                        f.name = f.name.to_snake_case();
+    for (mut pathbuf, definition) in definitions.into_iter() {
+        if pathbuf.starts_with(DEFAULT_DEFINITIONS_FTX_NAME) {
+            pathbuf.set_extension("rs");
+            let path = pathbuf
+                .strip_prefix(DEFAULT_DEFINITIONS_FTX_NAME)
+                .expect("strip_prefix DEFAULT_DEFINITIONS_FTX_NAME failed");
+
+            let path = Path::new("..")
+                .join(DEFAULT_DESTINATION_FTX_RUST_FOLDER_NAME)
+                .join("src")
+                .join(path);
+            let parent = path
+                .parent()
+                .unwrap_or_else(|| panic!("extract parent from {:?} failed", path));
+            if !parent.exists() {
+                fs::create_dir(parent)
+                    .unwrap_or_else(|e| panic!("create_dir for {:?} failed: {}", parent, e));
+            }
+
+            match definition {
+                Definition::Schema(schema) => match schema {
+                    Schema::Enum(e) => {
+                        let content = e
+                            .render()
+                            .unwrap_or_else(|_| panic!("render {:?} failed", path));
+                        fs::write(&path, content)
+                            .unwrap_or_else(|_| panic!("write {:?} failed", path));
                     }
-                    let content = s.render().unwrap();
-                    fs::create_dir_all(format!("../oce-ftx-rs/src/schema/{}", package)).unwrap();
-                    fs::write(
-                        format!("../oce-ftx-rs/src/schema/{}/{}.rs", package, file_name),
-                        content,
-                    )
-                    .unwrap();
-                }
-            },
+                    Schema::Mod(m) => {
+                        let content = m
+                            .render()
+                            .unwrap_or_else(|_| panic!("render {:?} failed", path));
+                        fs::write(&path, content)
+                            .unwrap_or_else(|_| panic!("write {:?} failed", path));
+                    }
+                    Schema::Struct(mut s) => {
+                        s.name = s.name.to_upper_camel_case();
+                        for f in s.fields.iter_mut() {
+                            f.org_name = f.name.clone();
+                            f.name = f.name.to_snake_case();
+                        }
+                        let content = s
+                            .render()
+                            .unwrap_or_else(|_| panic!("render {:?} failed", path));
+                        fs::write(&path, content)
+                            .unwrap_or_else(|_| panic!("write {:?} failed", path));
+                    }
+                },
+            }
         }
     }
 }
@@ -96,9 +113,15 @@ fn read_dir(path: &Path) -> Result<Vec<DirEntry>> {
     Ok(files)
 }
 
-fn read_file(path: &Path) -> Result<Definition> {
+fn read_file(path: &Path) -> Result<(PathBuf, Definition)> {
     let data = fs::read(path).with_context(|| format!("fs::read failed, path: {:?}", path))?;
     let ret = toml::from_slice(&data)
         .with_context(|| format!("toml::from_slice failed, path: {:?}", path))?;
-    Ok(ret)
+
+    let ret_path = path
+        .strip_prefix(DEFAULT_DEFINITIONS_FOLDER_PATH)
+        .with_context(|| format!("path.strip_prefix failed, path: {:?}", path))?
+        .to_path_buf();
+
+    Ok((ret_path, ret))
 }

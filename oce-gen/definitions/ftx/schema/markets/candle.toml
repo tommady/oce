@@ -1,5 +1,4 @@
 [schema]
-package = "markets"
 name = "candle"
 fields = [
 { name = "startTime", value = "2019-06-24T17:15:00+00:00", description = "start time of the window" },

@@ -1,5 +1,4 @@
 [schema]
-package = "spot_margin"
 name = "lending_history"
 fields = [
 { name = "coin", value = "BTC" },

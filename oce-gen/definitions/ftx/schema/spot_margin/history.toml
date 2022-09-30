@@ -1,5 +1,4 @@
 [schema]
-package = "spot_margin"
 name = "history"
 fields = [
 { name = "coin", value = "USD" },

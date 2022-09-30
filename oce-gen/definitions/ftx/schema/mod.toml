@@ -1,5 +1,4 @@
 [schema]
-package = "schema"
 description = ""
 fields = [
 "markets",

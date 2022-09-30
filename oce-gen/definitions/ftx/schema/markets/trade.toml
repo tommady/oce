@@ -1,5 +1,4 @@
 [schema]
-package = "markets"
 name = "trade"
 fields = [
 { name = "id", value = 3855995, type = "uint64", description = "trade id" },
