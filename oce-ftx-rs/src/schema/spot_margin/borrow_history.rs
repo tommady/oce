@@ -3,32 +3,38 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct BorrowHistory {
     // no description
     // example value: BTC
     #[serde(rename = "coin")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#coin: String,
     
     // amount of coin you paid as interest on the borrow
     // example value: 0.00047864470072
     #[serde(rename = "cost")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#cost: rust_decimal::Decimal,
     
     // borrow rate
     // example value: 0.00001961096
     #[serde(rename = "rate")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#rate: rust_decimal::Decimal,
     
     // amount borrowed
     // example value: 24.407
     #[serde(rename = "size")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#size: rust_decimal::Decimal,
     
     // time of interest payment
     // example value: 2021-04-06T20:00:00+00:00
     #[serde(rename = "time")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#time: chrono::DateTime<chrono::Utc>,
     }

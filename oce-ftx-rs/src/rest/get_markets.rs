@@ -14,7 +14,7 @@ impl crate::rest::Request for GetMarkets {
     const METHOD: Method = Method::GET;
     const PATH: &'static str = "/markets";
     const IS_AUTH: bool = false;
-    type Response = Vec<schema::market::Market>;
+    type Response = Vec<schema::markets::market::Market>;
 }
 
 #[cfg(test)]

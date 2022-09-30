@@ -3,17 +3,20 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct BorrowSummary {
     // no description
     // example value: BTC
     #[serde(rename = "coin")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#coin: String,
     
     // average matched borrowed and lent amount over the last 24h
     // example value: 120.1
     #[serde(rename = "size")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#size: rust_decimal::Decimal,
     }

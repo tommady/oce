@@ -3,37 +3,44 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct Trade {
     // trade id
     // example value: 3855995
     #[serde(rename = "id")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#id: u64,
     
     // if this trade involved a liquidation order
     // example value: false
     #[serde(rename = "liquidation")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#liquidation: bool,
     
     // no description
     // example value: 3857.75
     #[serde(rename = "price")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#price: rust_decimal::Decimal,
     
     // no description
     // example value: buy
     #[serde(rename = "side")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#side: String,
     
     // no description
     // example value: 0.111
     #[serde(rename = "size")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#size: rust_decimal::Decimal,
     
     // no description
     // example value: 2019-03-20T18:16:23.397991+00:00
     #[serde(rename = "time")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#time: chrono::DateTime<chrono::Utc>,
     }

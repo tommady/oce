@@ -3,9 +3,10 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct {{ name }} {
 {%- for field in fields -%}
     {%- let kind -%}
@@ -40,11 +41,13 @@ pub struct {{ name }} {
     // {{ description }}
     // example value: {{ field.value.to_string() }}
     #[serde(rename = "{{ field.org_name }}")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#{{ field.name }}: Option<{{ kind }}>,
     {%- else %}
     // {{ description }}
     // example value: {{ field.value.to_string() }}
     #[serde(rename = "{{ field.org_name }}")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#{{ field.name }}: {{ kind }},
     {% endif -%}
 {%- endfor -%}

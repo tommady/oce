@@ -3,122 +3,146 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct Market {
     // e.g. "BTC/USD" for spot, "BTC-PERP" for futures
     // example value: BTC-PERP
     #[serde(rename = "name")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#name: String,
     
     // spot markets only
     // example value: BTC
     #[serde(rename = "baseCurrency")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#base_currency: Option<String>,
     
     // spot markets only
     // example value: USD
     #[serde(rename = "quoteCurrency")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#quote_currency: Option<String>,
     
     // no description
     // example value: 28914.76
     #[serde(rename = "quoteVolume24h")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#quote_volume24h: rust_decimal::Decimal,
     
     // change in the past hour
     // example value: 0.012
     #[serde(rename = "change1h")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#change1h: rust_decimal::Decimal,
     
     // change in the past 24 hours
     // example value: 0.0299
     #[serde(rename = "change24h")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#change24h: rust_decimal::Decimal,
     
     // change since start of day (00:00 UTC)
     // example value: 0.0156
     #[serde(rename = "changeBod")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#change_bod: rust_decimal::Decimal,
     
     // no description
     // example value: false
     #[serde(rename = "highLeverageFeeExempt")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#high_leverage_fee_exempt: bool,
     
     // Minimum maker order size (if >10 orders per hour fall below this size)
     // example value: 0.001
     #[serde(rename = "minProvideSize")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#min_provide_size: rust_decimal::Decimal,
     
     // "future" or "spot"
     // example value: future
     #[serde(rename = "type")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#type: String,
     
     // future markets only
     // example value: BTC
     #[serde(rename = "underlying")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#underlying: Option<String>,
     
     // no description
     // example value: true
     #[serde(rename = "enabled")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#enabled: bool,
     
     // best ask
     // example value: 3949.25
     #[serde(rename = "ask")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#ask: rust_decimal::Decimal,
     
     // best bid
     // example value: 3949
     #[serde(rename = "bid")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#bid: rust_decimal::Decimal,
     
     // last traded price
     // example value: 3949
     #[serde(rename = "last")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#last: rust_decimal::Decimal,
     
     // if the market is in post-only mode (all orders get modified to be post-only, in addition to other settings they may have)
     // example value: false
     #[serde(rename = "postOnly")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#post_only: bool,
     
     // current price
     // example value: 10579.52
     #[serde(rename = "price")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#price: rust_decimal::Decimal,
     
     // no description
     // example value: 0.25
     #[serde(rename = "priceIncrement")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#price_increment: rust_decimal::Decimal,
     
     // no description
     // example value: 0.0001
     #[serde(rename = "sizeIncrement")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#size_increment: rust_decimal::Decimal,
     
     // if the market has nonstandard restrictions on which jurisdictions can trade it
     // example value: false
     #[serde(rename = "restricted")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#restricted: bool,
     
     // USD volume in past 24 hours
     // example value: 28914.76
     #[serde(rename = "volumeUsd24h")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#volume_usd24h: rust_decimal::Decimal,
     
     // threshold above which an order is considered large (for VIP rate limits)
     // example value: 5000
     #[serde(rename = "largeOrderThreshold")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#large_order_threshold: rust_decimal::Decimal,
     
     // if the market has an ETF as its baseCurrency
     // example value: false
     #[serde(rename = "isEtfMarket")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#is_etf_market: bool,
     }

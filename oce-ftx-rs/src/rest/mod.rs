@@ -4,15 +4,23 @@ mod get_single_market;
 mod get_trades;
 
 use reqwest::{Client, ClientBuilder, Method};
-use serde::de::DeserializeOwned;
+use serde::{de::DeserializeOwned, Deserialize};
 
-use crate::{
-    errors::FtxError,
-    schema::{ErrorResponse, SuccessResponse},
-    Result,
-};
+use crate::{errors::FtxError, Result};
 
 use std::{borrow::Cow, time::Duration};
+
+#[derive(Debug, Deserialize)]
+pub struct ErrorResponse {
+    pub success: bool,
+    pub error: String,
+}
+
+#[derive(Debug, Deserialize)]
+pub struct SuccessResponse<T> {
+    pub success: bool,
+    pub result: T,
+}
 
 pub trait Request {
     const METHOD: Method;

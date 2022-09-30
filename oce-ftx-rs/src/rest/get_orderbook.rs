@@ -29,7 +29,7 @@ impl<'a> crate::rest::Request for GetOrderbook<'a> {
     const METHOD: Method = Method::GET;
     const PATH: &'static str = "/markets";
     const IS_AUTH: bool = false;
-    type Response = schema::orderbook::Orderbook;
+    type Response = schema::markets::orderbook::Orderbook;
 
     fn path(&self) -> Cow<'_, str> {
         let params = serde_urlencoded::to_string(&[("depth", self.depth)]).unwrap();

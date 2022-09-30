@@ -3,32 +3,38 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct LendingInfo {
     // no description
     // example value: USD
     #[serde(rename = "coin")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#coin: String,
     
     // additional size you can lend
     // example value: 10026.5
     #[serde(rename = "lendable")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#lendable: rust_decimal::Decimal,
     
     // size either in lending offers or not yet unlocked from lending offers
     // example value: 100
     #[serde(rename = "locked")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#locked: rust_decimal::Decimal,
     
     // minimum rate at which your offers will lend
     // example value: 0.000001
     #[serde(rename = "minRate")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#min_rate: rust_decimal::Decimal,
     
     // size in your lending offers
     // example value: 100
     #[serde(rename = "offered")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#offered: rust_decimal::Decimal,
     }

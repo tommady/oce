@@ -3,32 +3,38 @@
 // DO NOT EDIT
 // 
 use serde::Deserialize;
+use serde_with::{serde_as, DefaultOnNull};
 
-#[derive(Deserialize, Default)]
-#[serde(default)]
+#[serde_as]
+#[derive(Deserialize, Debug)]
 pub struct MarketInfo {
     // no description
     // example value: BTC
     #[serde(rename = "coin")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#coin: String,
     
     // amount of coin currently borrowed
     // example value: 0
     #[serde(rename = "borrowed")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#borrowed: rust_decimal::Decimal,
     
     // amount of coin that can be spent buying the other coin in the supplied market, including what's borrowable with margin
     // example value: 3.87278021
     #[serde(rename = "free")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#free: rust_decimal::Decimal,
     
     // estimated hourly borrow rate for the next spot margin cycle
     // example value: 0.00000145
     #[serde(rename = "estimatedRate")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#estimated_rate: rust_decimal::Decimal,
     
     // hourly borrow rate in the previous spot margin cycle
     // example value: 0.00000144
     #[serde(rename = "previousRate")]
+    #[serde_as(deserialize_as = "DefaultOnNull")]
     pub r#previous_rate: rust_decimal::Decimal,
     }
