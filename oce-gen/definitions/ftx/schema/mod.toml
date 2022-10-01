@@ -1,6 +1,6 @@
 [schema]
 description = ""
 fields = [
-"markets",
-"spot_margin",
+{ name = "markets" },
+{ name = "spot_margin" },
 ]

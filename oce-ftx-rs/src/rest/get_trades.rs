@@ -40,7 +40,7 @@ impl<'a> crate::rest::Request for GetTrades<'a> {
     const METHOD: Method = Method::GET;
     const PATH: &'static str = "/markets";
     const IS_AUTH: bool = false;
-    type Response = Vec<schema::markets::trade::Trade>;
+    type Response = Vec<schema::markets::Trade>;
 
     fn path(&self) -> Cow<'_, str> {
         let params = serde_urlencoded::to_string(&[

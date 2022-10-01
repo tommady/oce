@@ -109,11 +109,18 @@ pub(crate) struct EnumKind {
     pub(crate) values: Vec<EnumValue>,
 }
 
+#[derive(Debug, Default, Deserialize)]
+#[serde(rename_all = "snake_case", default)]
+pub(crate) struct ModField {
+    pub(crate) name: String,
+    pub(crate) pub_name: String,
+}
+
 #[derive(Debug, Template, Deserialize)]
 #[template(path = "rust/schema/mod.template", escape = "none")]
 pub(crate) struct ModKind {
     pub(crate) description: String,
-    pub(crate) fields: Vec<String>,
+    pub(crate) fields: Vec<ModField>,
 }
 
 #[derive(Debug, Deserialize)]

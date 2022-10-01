@@ -1,13 +1,13 @@
 [schema]
 description = ""
 fields = [
-"borrow_history",
-"borrow_rate",
-"borrow_summary",
-"history",
-"lending_history",
-"lending_info",
-"lending_rate",
-"market_info",
-"offer",
+{ name = "borrow_history", pub_name = "BorrowHistory" },
+{ name = "borrow_rate", pub_name = "BorrowRate" },
+{ name = "borrow_summary", pub_name = "BorrowSummary" },
+{ name = "history", pub_name = "History" },
+{ name = "lending_history", pub_name = "LendingHistory" },
+{ name = "lending_info", pub_name = "LendingInfo" },
+{ name = "lending_rate", pub_name = "LendingRate" },
+{ name = "market_info", pub_name = "MarketInfo" },
+{ name = "offer", pub_name = "Offer" },
 ]
