@@ -1,0 +1,7 @@
+[rest]
+name = "get_single_market"
+method = "get"
+path = ""
+fields = [
+{ name = "market_name", type = "str" },
+]

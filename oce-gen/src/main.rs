@@ -8,13 +8,14 @@ use askama::Template;
 use heck::{ToSnakeCase, ToUpperCamelCase};
 use serde::Deserialize;
 
+mod rest;
 mod schema;
-use schema::*;
 
 #[derive(Debug, Deserialize)]
 #[serde(rename_all = "snake_case")]
 enum Definition {
-    Schema(Schema),
+    Schema(schema::Schema),
+    Rest(rest::Rest),
 }
 
 const DEFAULT_DEFINITIONS_FOLDER_PATH: &str = "definitions";
@@ -71,24 +72,37 @@ fn main() {
 
             match definition {
                 Definition::Schema(schema) => match schema {
-                    Schema::Enum(e) => {
+                    schema::Schema::Enum(e) => {
                         let content = e
                             .render()
                             .unwrap_or_else(|_| panic!("render {:?} failed", path));
                         fs::write(&path, content)
                             .unwrap_or_else(|_| panic!("write {:?} failed", path));
                     }
-                    Schema::Mod(m) => {
+                    schema::Schema::Mod(m) => {
                         let content = m
                             .render()
                             .unwrap_or_else(|_| panic!("render {:?} failed", path));
                         fs::write(&path, content)
                             .unwrap_or_else(|_| panic!("write {:?} failed", path));
                     }
-                    Schema::Struct(mut s) => {
+                    schema::Schema::Struct(mut s) => {
                         s.name = s.name.to_upper_camel_case();
                         for f in s.fields.iter_mut() {
                             f.org_name = f.name.clone();
+                            f.name = f.name.to_snake_case();
+                        }
+                        let content = s
+                            .render()
+                            .unwrap_or_else(|_| panic!("render {:?} failed", path));
+                        fs::write(&path, content)
+                            .unwrap_or_else(|_| panic!("write {:?} failed", path));
+                    }
+                },
+                Definition::Rest(rest) => match rest {
+                    rest::Rest::Struct(mut s) => {
+                        s.name = s.name.to_upper_camel_case();
+                        for f in s.fields.iter_mut() {
                             f.name = f.name.to_snake_case();
                         }
                         let content = s
